@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>💖 darling</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #fffaf0 0%, #fff5fb 100%);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      overflow-x: hidden;
+      color: #4a2c2c;
+    }
+    
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      transition: opacity 0.8s ease;
+    }
+    
+    .overlay h1 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      color: #d63384;
+      text-align: center;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .open-btn {
+      padding: 16px 32px;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      background: linear-gradient(45deg, #ff6b9a, #ff4b8b);
+      color: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(255, 107, 154, 0.4);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .open-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(255, 107, 154, 0.5);
+    }
+    
+    .open-btn:active {
+      transform: translateY(1px);
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 800px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .message-container {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .message-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #ff6b9a, #ff9999, #ff6b9a);
+    }
+    
+    .message {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #4a2c2c;
+      text-align: center;
+      min-height: 150px;
+      font-family: 'Georgia', serif;
+      text-transform: lowercase;
+    }
+    
+    .message::first-line {
+      text-transform: capitalize;
+    }
+    
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.2rem;
+      background-color: #ff6b9a;
+      margin-left: 2px;
+      animation: blink 1s infinite;
+      vertical-align: middle;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    .gift-btn {
+      font-size: 3rem;
+      padding: 15px 25px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      animation: bounce 1.5s infinite;
+      margin: 20px 0;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .gift-btn.shake {
+      animation: wiggle 0.6s ease;
+    }
+    
+    @keyframes wiggle {
+      0% { transform: rotate(0deg); }
+      25% { transform: rotate(-8deg); }
+      50% { transform: rotate(8deg); }
+      75% { transform: rotate(-5deg); }
+      100% { transform: rotate(0deg); }
+    }
+    
+    .gift-box {
+      display: none;
+      text-align: center;
+      width: 100%;
+    }
+    
+    .gift-box img {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      animation: pop 0.8s ease;
+    }
+    
+    @keyframes pop {
+      0% { transform: scale(0.6) rotate(-5deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0); opacity: 1; }
+    }
+    
+    .gift-box h2 {
+      margin-top: 20px;
+      font-size: 2.2rem;
+      color: #d63384;
+      text-shadow: 0 0 8px rgba(255, 107, 154, 0.6);
+      animation: glow 1.5s infinite alternate;
+    }
+    
+    @keyframes glow {
+      from { text-shadow: 0 0 8px rgba(255, 107, 154, 0.6); }
+      to { text-shadow: 0 0 16px rgba(255, 50, 120, 0.9); }
+    }
+    
+    .heart {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      color: #ff6b9a;
+      animation: fall 4s linear forwards;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); }
+    }
+    
+    .sparkle {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      pointer-events: none;
+      animation: twinkle 1.5s infinite alternate;
+      z-index: -1;
+    }
+    
+    @keyframes twinkle {
+      from { opacity: 0.5; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.2); }
+    }
+    
+    .final-message {
+      display: none;
+      text-align: center;
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .final-message h3 {
+      color: #d63384;
+      margin-bottom: 15px;
+      font-size: 1.8rem;
+    }
+    
+    .final-message p {
+      line-height: 1.7;
+      font-size: 1.1rem;
+      text-transform: lowercase;
+    }
+    
+    .final-message p::first-line {
+      text-transform: capitalize;
+    }
+    
+    .replay-btn {
+      margin-top: 20px;
+      padding: 12px 25px;
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .replay-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+    }
+    
+    @media (max-width: 768px) {
+      .overlay h1 {
+        font-size: 2rem;
+        padding: 0 20px;
+      }
+      
+      .message-container {
+        padding: 20px;
+      }
+      
+      .message {
+        font-size: 1rem;
+      }
+      
+      .gift-box h2 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay">
+    <h1>💖 for my darling💌</h1>
+    <button class="open-btn" id="openOverlay">
+      <i class="fas fa-heart"></i> open my love
+    </button>
+  </div>
+
+  <div class="container">
+    <div class="message-container">
+      <div class="message" id="message"></div>
+    </div>
+    
+    <button class="gift-btn" id="giftBtn" style="display:none">🎁</button>
+    
+    <div class="gift-box" id="giftBox">
+      <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="Happy Celebration">
+      <h2>Happy Birthday My Love 💖</h2>
+    </div>
+    
+    <div class="final-message" id="finalMessage">
+      <h3></h3>
+      <p>🌹🌹🌹🌹🌹</p>
+      <p>🌹🌹🌹🌹🌹</p>
+      <button class="replay-btn" id="replayBtn">rewind..<i class="fas fa-redo"></i></button>
+    </div>
+  </div>
+
+<script>
+  // Elements
+  const overlay = document.getElementById('overlay');
+  const openOverlay = document.getElementById('openOverlay');
+  const messageEl = document.getElementById('message');
+  const giftBtn = document.getElementById('giftBtn');
+  const giftBox = document.getElementById('giftBox');
+  const finalMessage = document.getElementById('finalMessage');
+  const replayBtn = document.getElementById('replayBtn');
+  
+  const popSound = document.getElementById('popSound');
+  const heartbeatSound = document.getElementById('heartbeatSound');
+  
+  const text = "\n\nmy dearest,\n\nhope your special day is full of smile and happiness\n\nsending you lots of love..\n\nmy cutiee patoothie <3\n💖";
+  
+  // Typing effect function
+  function typeText(text, speed) {
+    let i = 0;
+    let lineBreak = false;
+    
+    function typing() {
+      if (i < text.length) {
+        if (text.charAt(i) === '\n') {
+          messageEl.innerHTML += '<br>';
+          lineBreak = true;
+        } else {
+          if (lineBreak) {
+            messageEl.innerHTML += text.charAt(i);
+            lineBreak = false;
+          } else {
+            messageEl.innerHTML += text.charAt(i);
+          }
+        }
+        i++;
+        setTimeout(typing, speed);
+      } else {
+        messageEl.innerHTML += '<span class="cursor"></span>';
+        setTimeout(() => {
+          giftBtn.style.display = 'inline-block';
+          heartbeatSound.play();
+        }, 1000);
+      }
+    }
+    typing();
+  }
+  
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (16 + Math.random() * 20) + 'px';
+    heart.textContent = '💖';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+  }
+  
+  function createSparkle() {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.top = Math.random() * 100 + 'vh';
+    s.style.width = (3 + Math.random() * 5) + 'px';
+    s.style.height = s.style.width;
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1500);
+  }
+  
+  function createConfetti() {
+    const confetti = document.createElement('div');
+    confetti.className = 'heart';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.fontSize = (10 + Math.random() * 15) + 'px';
+    
+    const symbols = ['🎉', '🎊', '✨', '💫', '🌟', '💖', '🎁', '🥳'];
+    confetti.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 4000);
+  }
+  
+  openOverlay.addEventListener('click', () => {
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 800);
+    
+    typeText(text, 50);
+    setInterval(createHeart, 300);
+    setInterval(createSparkle, 200);
+  });
+  
+  giftBtn.addEventListener('click', () => {
+    giftBtn.classList.add('shake');
+    
+    setTimeout(() => {
+      messageEl.style.display = 'none';
+      giftBtn.style.display = 'none';
+      giftBox.style.display = 'block';
+      
+      // Show final message after a delay
+      setTimeout(() => {
+        finalMessage.style.display = 'block';
+        
+        // Start confetti celebration
+        setInterval(createConfetti, 100);
+      }, 2000);
+    }, 600);
+  });
+  
+  // Replay button event
+  replayBtn.addEventListener('click', () => {
+    // Reset everything
+    messageEl.innerHTML = '';
+    messageEl.style.display = 'block';
+    giftBox.style.display = 'none';
+    finalMessage.style.display = 'none';
+    giftBtn.style.display = 'none';
+    giftBtn.classList.remove('shake');
+    
+    // Show overlay again
+    overlay.style.display = 'flex';
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+    }, 10);
+  });
+</script>
+</body>
+</html>
